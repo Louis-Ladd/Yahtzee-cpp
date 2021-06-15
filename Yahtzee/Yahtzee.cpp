@@ -9,15 +9,10 @@
 
 using namespace std;
 
-string one;
-string two;
-string three;
-string four;
-string five;
-string six;
-
 void printRoll(vector<int> rollSet)
 {
+	int trueSize;
+	trueSize = rollSet.size() - 1;
 	//get ready to see some terrible code.
 	vector<string> dice;
 	dice =
@@ -52,12 +47,11 @@ void printRoll(vector<int> rollSet)
 			"\n|o o|"
 			"\n-----\n" };
 
-	for (int i = 0; i <= 4; i++)
+	for (int i = 0; i <= trueSize; i++)
 	{
 		cout << dice[rollSet[i] - 1];
 	}
 
-	
 }
 
 static random_device rd;//vv and this is for the true random number generation.
@@ -251,28 +245,33 @@ int main()
 	score = 0;
 	vector<int> fiveDice(5);
 	vector<int> scoreSet(6);
-	vector<int> holdSet(5, 0);
+	//vector<int> holdSet(5, 0);
 	cout << "Welcome to Ladds Yahtzee, Coded in c++. Have fun!!!\n";
 	system("PAUSE");
 	system("CLS");
 	
 	for (rounds = 1; rounds <= 13; rounds++)
 	{
-		cout << "Score: " << score << "  ---Yahtzee---  " << "Round: " << rounds;
 		fiveDice = rollSet();
+		for (int i = 0; i <= 20; i++)
+		{
+			cout << "Score: " << score << "  ---Yahtzee---  " << "Round: " << rounds;
+			printRoll({ rollDie(), rollDie(), rollDie(), rollDie(), rollDie() });
+			system("CLS");
+		}
+		cout << "Score: " << score << "  ---Yahtzee---  " << "Round: " << rounds;
+
 		printRoll(fiveDice);
+
 		system("PAUSE");
+
 		scoreSet = getScoreSet(fiveDice);
 
 		score += scoreScoreSet(scoreSet, rollSetSum(fiveDice));
 
-		if (rounds != 13) 
+		if (scoreScoreSet(scoreSet, rollSetSum(fiveDice)) == 0 && chance != true)
 		{
-			score += scoreScoreSet(scoreSet, rollSetSum(fiveDice));
-		}
-		else if (rounds == 13)
-		{
-			chance = getUserYN("Would you like to chance your last roll?");
+			chance = getUserYN("Would you like to Chance this Roll?(Y/N)...  ");
 			if (chance == true)
 			{
 				score += rollSetSum(fiveDice);
